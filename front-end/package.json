@@ -4,7 +4,8 @@
   "description": "A memory game based on memes ¯\\(ツ)\\/¯.",
   "main": "index.js",
   "scripts": {
-    "start": "http-server -c-1",
+    "build": "webpack build --mode=production --no-devtool",
+    "start": "webpack serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -14,6 +15,9 @@
   "author": "Baptiste PREVOST",
   "license": "ISC",
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "html-webpack-plugin": "^5.6.0",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.2"
   }
 }
