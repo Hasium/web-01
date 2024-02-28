@@ -7,9 +7,8 @@ import { parseUrl } from "./utils.js";
 export class ScoreComponent extends Component {
   constructor() {
     super(template)
-    var params = parseUrl();
+    const params = parseUrl();
 
-    this.template = template;
     this.name = params.name;
     this.size = parseInt(params.size);
     this.time = parseInt(params.time);
