@@ -4,7 +4,7 @@ import "./footer.component.css";
 
 export class FooterComponent extends HTMLElement {
     constructor() {
-      super();
-      this.innerHTML = template;
+        super();
+        this.innerHTML = template;
     }
-  }
+}
