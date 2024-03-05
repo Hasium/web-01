@@ -12,10 +12,6 @@ body {
   overflow: hidden;
 }
 
-.navbar-brand img {
-  height: 50px;
-}
-
 body > main {
   overflow: auto;
 }
