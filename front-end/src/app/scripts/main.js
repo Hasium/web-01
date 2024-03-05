@@ -1,7 +1,7 @@
 import { Router } from "./router.js";
-import { WelcomeComponent } from "./welcome.js";
-import { GameComponent } from "./game.js";
-import { ScoreComponent } from "./score.js";
+import { WelcomeComponent } from "../components/welcome/welcome.component.js";
+import { GameComponent } from "../components/game/game.component.js";
+import { ScoreComponent } from "../components/score/score.component.js";
 // TODO #import-css: use ES side-effect imports to import styles/style.css
 
 import '/node_modules/bootstrap/dist/css/bootstrap.css';
