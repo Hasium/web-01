@@ -3,7 +3,6 @@ import { Component } from "../../scripts/component.js";
 import "./score.component.css";
 import { parseUrl } from "../../scripts/utils.js";
 
-/* class ScoreComponent constructor */
 export class ScoreComponent extends Component {
   constructor() {
     super(template)

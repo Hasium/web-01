@@ -12,7 +12,6 @@ const environment = {
   },
 };
 
-/* class GameComponent constructor */
 export class GameComponent extends Component {
   constructor() {
     super(template)

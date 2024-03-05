@@ -2,7 +2,6 @@ import template from "../welcome/welcome.component.html";
 import "./welcome.component.css";
 import { Component } from "../../scripts/component.js";
 
-/* class WelcomeComponent constructor  */
 export class WelcomeComponent extends Component {
   constructor() {
     super(template);
