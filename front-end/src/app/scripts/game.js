@@ -44,28 +44,24 @@ export class GameComponent extends Component {
   }
 
   /* method GameComponent.init */
-  init() {
+  async init() {
     // fetch the cards configuration from the server
-    this.fetchConfig((config) => {
-        this._config = config;
-        this._boardElement = document.querySelector(".cards");
+    this._config = await this.fetchConfig();
+    this._boardElement = document.querySelector(".cards");
 
-        // create cards out of the config
-        this._cards = this._config.ids.map((id) => new CardComponent(id));
+    // create cards out of the config
+    this._cards = this._config.ids.map((id) => new CardComponent(id));
 
-        this._cards.forEach(card => {
-          this._boardElement.appendChild(card.getElement());
-          card.getElement().addEventListener(
-            "click",
-            () => {
-              this._flipCard(card);
-            }
-          );
-        });
-
-        this.start();
-      }
-    );
+    this._cards.forEach(card => {
+      this._boardElement.appendChild(card.getElement());
+      card.getElement().addEventListener(
+        "click",
+        () => {
+          this._flipCard(card);
+        }
+      );
+    });
+    this.start();
   };
 
   /* method GameComponent.start */
@@ -84,31 +80,16 @@ export class GameComponent extends Component {
     );
   };
 
-  /* method GameComponent.fetchConfig */
-  fetchConfig(cb) {
-    const xhr =
-      typeof XMLHttpRequest != "undefined"
-        ? new XMLHttpRequest()
-        : new ActiveXObject("Microsoft.XMLHTTP");
-
-    xhr.open("get", `${environment.api.host}/board?size=${this._size}`, true);
-
-    xhr.onreadystatechange = () => {
-      let status;
-      let data;
-      // https://xhr.spec.whatwg.org/#dom-xmlhttprequest-readystate
-      if (xhr.readyState == 4) {
-        // `DONE`
-        status = xhr.status;
-        if (status == 200) {
-          data = JSON.parse(xhr.responseText);
-          cb(data);
-        } else {
-          throw new Error(status);
-        }
-      }
-    };
-    xhr.send();
+  async fetchConfig() {
+    const reponse = await fetch(`${environment.api.host}/board?size=${this._size}`, {
+      method: 'GET'
+    });
+    console.log(reponse);
+    if (reponse.status === 200) {
+      return reponse.json();
+    } else {
+      throw new Error(reponse.status);
+    }
   };
 
   /* method GameComponent.goToScore */
@@ -119,9 +100,9 @@ export class GameComponent extends Component {
     clearInterval(this._timer);
 
     setTimeout(() => {
-        const scorePage = './#score';
-        window.location = `${scorePage}?name=${this._name}&size=${this._size}&time=${timeElapsedInSeconds}`;
-      },
+      const scorePage = './#score';
+      window.location = `${scorePage}?name=${this._name}&size=${this._size}&time=${timeElapsedInSeconds}`;
+    },
       750
     );
   };
