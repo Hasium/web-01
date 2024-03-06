@@ -6,8 +6,7 @@ import { ScoreComponent } from "../components/score/score.component.js";
 import { NavbarComponent } from "../components/navbar/navbar.component.js";
 import { FooterComponent } from "../components/footer/footer.compenent.js";
 
-import '/node_modules/bootstrap/dist/css/bootstrap.css';
-import "../styles/style.css";
+import "../styles/style.scss";
 
 customElements.define("my-navbar", NavbarComponent);
 customElements.define("my-footer", FooterComponent);

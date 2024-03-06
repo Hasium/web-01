@@ -2,7 +2,7 @@ import template from "./game.component.html";
 import { Component } from "../../scripts/component";
 
 import { parseUrl } from "../../scripts/utils.js";
-import "./game.component.css";
+import "./game.component.scss";
 
 import { CardComponent } from "./card/card.component.js";
 

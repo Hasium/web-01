@@ -1,6 +1,6 @@
 import template from './footer.component.html';
 
-import "./footer.component.css";
+import "./footer.component.scss";
 
 export class FooterComponent extends HTMLElement {
     constructor() {

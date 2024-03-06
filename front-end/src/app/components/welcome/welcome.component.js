@@ -1,5 +1,5 @@
 import template from "../welcome/welcome.component.html";
-import "./welcome.component.css";
+import "./welcome.component.scss";
 import { Component } from "../../scripts/component.js";
 
 export class WelcomeComponent extends Component {

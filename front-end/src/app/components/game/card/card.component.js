@@ -1,6 +1,6 @@
 import { Component } from "../../../scripts/component.js";
 
-import "./card.component.css";
+import "./card.component.scss";
 
 import back from "./assets/back.png";
 import card0 from "./assets/card-0.png";
