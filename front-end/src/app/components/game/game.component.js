@@ -106,7 +106,9 @@ export class GameComponent extends Component {
 
     setTimeout(() => {
       const scorePage = './#score';
-      window.location = `${scorePage}?name=${this._name}&size=${this._size}&time=${timeElapsedInSeconds}`;
+      const time = timeElapsedInSeconds;
+      this._postScore(time);
+      window.location = `${scorePage}?name=${this._name}&size=${this._size}&time=${time}`;
     },
       750
     );
@@ -174,5 +176,32 @@ export class GameComponent extends Component {
       }
     }
   };
+
+  async _postScore(time) {
+    const score = {
+      name: this._name,
+      size: this._size,
+      time: time
+    };
+    console.log(score);
+    try {
+      const response = await fetch(`${environment.api.host}/scores`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(score),
+      });
+      const data = await response.json();
+      if (response.status === 201) {
+        console.log("Score saved", data);
+      } else {  
+        console.error("Error:", data);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
 }
 
