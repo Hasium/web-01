@@ -5,6 +5,7 @@ import { parseUrl } from "../../scripts/utils.js";
 import "./game.component.scss";
 
 import { CardComponent } from "./card/card.component.js";
+import * as localforage from "localforage/dist/localforage";
 
 const environment = {
   api: {
@@ -27,12 +28,32 @@ export class GameComponent extends Component {
 
   /* method GameComponent.init */
   async init() {
-    // fetch the cards configuration from the server
-    this._config = await this.fetchConfig();
-    this._boardElement = document.querySelector(".cards");
+    this._cards = JSON.parse(await localforage.getItem("cards"));
+    this._matchedPairs = JSON.parse(await localforage.getItem("score")) || 0;
 
-    // create cards out of the config
-    this._cards = this._config.ids.map((id) => new CardComponent(id));
+    if (this._cards) {
+      this._cards = this._cards.map(
+        (card) => new CardComponent(card._id, card.matched, card.flipped)
+      );
+      this._cards.forEach((card) => {
+        if (card.flipped) {
+          card.flipInit();
+        }
+      });
+    } else {
+      this._config = await this.fetchConfig();
+      this._cards = this._config.ids.map((id) => new CardComponent(id));
+      await localforage.setItem("cards", JSON.stringify(this._cards.map((card) => {
+        return {
+          _id: card._id,
+          matched: card.matched,
+          flipped: card.flipped
+        };
+      }
+      )));
+    }
+
+    this._boardElement = document.querySelector(".cards");
 
     this._cards.forEach(card => {
       this._boardElement.appendChild(card.getElement());
@@ -76,6 +97,8 @@ export class GameComponent extends Component {
 
   /* method GameComponent.goToScore */
   goToScore() {
+    localforage.removeItem("score");
+    localforage.removeItem("cards");
     const timeElapsedInSeconds = Math.floor(
       (Date.now() - this._startTime) / 1000
     );
@@ -94,7 +117,7 @@ export class GameComponent extends Component {
     if (this._busy) {
       return;
     }
-
+    
     if (card.flipped) {
       return;
     }
@@ -120,6 +143,16 @@ export class GameComponent extends Component {
 
         if (this._matchedPairs === this._size) {
           this.goToScore();
+        } else {
+          localforage.setItem("cards", JSON.stringify(this._cards.map((card) => {
+            return {
+              _id: card._id,
+              matched: card.matched,
+              flipped: card.flipped
+            };
+          })));
+  
+          localforage.setItem("score", JSON.stringify(this._matchedPairs));
         }
       } else {
         this._busy = true;

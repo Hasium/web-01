@@ -31,13 +31,13 @@ const CARDS_IMAGE = [
   ];
 
 export class CardComponent extends Component {
-    constructor(id) {
+    constructor(id, matched = false, flipped= false) {
       super(cardTemplate)
       // is this card flipped?
-      this._flipped = false;
+      this._flipped = flipped;
   
       // has the matching card has been discovered already?
-      this.matched = false;
+      this.matched = matched;
   
       this._elt = document.createElement("div");
       this._elt.innerHTML = this.template;
@@ -59,6 +59,11 @@ export class CardComponent extends Component {
     flip() {
       this._imageElt.classList.toggle("flip");
       this._flipped = !this._flipped;
+    };
+
+    /* method CardComponent.flip */
+    flipInit() {
+      this._imageElt.classList.toggle("flip");
     };
   
     /* method CardComponent.equals */
