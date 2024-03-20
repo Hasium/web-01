@@ -5,3 +5,18 @@
   /* When the animation is finished, start again */
   animation-iteration-count: infinite;
 }
+
+.dropdown-menu {
+  display: none;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-element:hover {
+  background-color: #f1f1f1;
+  padding-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
